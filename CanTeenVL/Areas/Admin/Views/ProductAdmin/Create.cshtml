@@ -1,0 +1,111 @@
+﻿@model CanTeenVL.Models.FOOD
+
+@{
+    //ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2 style="text-align:center">Create Food</h2>
+<br />
+@using (Html.BeginForm("Create","ProductAdmin",FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="card card-primary">
+            <div class="card-header">
+                <h1 class="card-title">Create</h1>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-3" hidden>
+                            <label for="exampleInputEmail1">FOOD_CODE</label>
+                            @Html.EditorFor(model => model.FOOD_CODE, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FOOD_CODE, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleInputPassword1">FOOD_NAME</label>
+                            @Html.EditorFor(model => model.FOOD_NAME, new { htmlAttributes = new { @class = "form-control", @required = true, @minLength = "1", @maxLength = "30" } })
+                            @Html.ValidationMessageFor(model => model.FOOD_NAME, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-5">
+                            @Html.LabelFor(model => model.CATEGORY_ID, "CATEGORY", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="select2-container--bootstrap4">
+                                @Html.DropDownList("CATEGORY_ID", new SelectList(ViewBag.product_type, "ID", "CATEGORY_NAME"), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CATEGORY_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">DESCRIPTION</label>
+                        <div>
+                            @Html.TextAreaFor(model => model.DESCRIPTION, new { @class = "form-control", @required = true })
+                            @Html.ValidationMessageFor(model => model.DESCRIPTION, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="IMG">PICTURE</label>
+                            <br />
+                            <input accept="image/gif, image/ipeg, image/png" type="file" name="Picture" id="IMG" onchange="readPicture(this)" />
+                            <img id="Picture" />
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1">PRICE</label>
+                            <div>
+                                <div class="input-group">
+                                    @Html.EditorFor(model => model.PRICE, new { htmlAttributes = new { @class = "form-control", @required = true, @min= "1000", @max= "1000000" } })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">VND</span>
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.PRICE, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.STATUS, new { @required = true })
+                        @Html.ValidationMessageFor(model => model.STATUS, "", new { @class = "form-check-input" })
+                        <label for="exampleInputPassword1">STATUS</label>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" value="Create" class="btn btn-primary">Submit</button>
+                    <a href="@Url.Action("Index","ProductAdmin")" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#DESCRIPTION',
+            menubar: false
+        });
+        
+        function readPicture(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('img#Picture').attr('src', e.target.result).width(200).height(250);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

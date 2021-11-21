@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a921450034d944b0afcc41b719425673" Name="Diagram1">
+        <EntityTypeShape EntityType="AD1Team3Model.ACCOUNT" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="AD1Team3Model.CATEGORY" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AD1Team3Model.CUSTOMER" Width="1.5" PointX="3.75" PointY="8.875" />
+        <EntityTypeShape EntityType="AD1Team3Model.FOOD" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="AD1Team3Model.INTRODUCTION" Width="1.5" PointX="5.75" PointY="1.75" />
+        <EntityTypeShape EntityType="AD1Team3Model.ORDER" Width="1.5" PointX="6" PointY="4.25" />
+        <EntityTypeShape EntityType="AD1Team3Model.ORDER_DETAIL" Width="1.5" PointX="8.25" PointY="4.625" />
+        <EntityTypeShape EntityType="AD1Team3Model.STATUS_BILL" Width="1.5" PointX="3.75" PointY="1.5" />
+        <EntityTypeShape EntityType="AD1Team3Model.sysdiagram" Width="1.5" PointX="0.75" PointY="8.75" />
+        <AssociationConnector Association="AD1Team3Model.FK__ORDERS__CUST_ID__1BFD2C07" />
+        <AssociationConnector Association="AD1Team3Model.FK_FOOD_ACCOUNT" />
+        <AssociationConnector Association="AD1Team3Model.FK__FOOD__MENU_ID__117F9D94" />
+        <AssociationConnector Association="AD1Team3Model.FK__ORDERS__CUST_ID__1CF15040" />
+        <AssociationConnector Association="AD1Team3Model.FK_ORDER_DETAIL_FOOD" />
+        <AssociationConnector Association="AD1Team3Model.FK__DETAILORD__PRICE__21B6055D" />
+        <AssociationConnector Association="AD1Team3Model.FK_ORDER_STATUS_BILL" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

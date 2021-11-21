@@ -1,0 +1,586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AD1Team3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FULL_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="STATUS" Type="bit" Nullable="false" />
+          <Property Name="ROLE" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CATEGORY_CODE" Type="varchar" MaxLength="5" />
+          <Property Name="CATEGORY_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IMAGE_URL" Type="nvarchar(max)" />
+          <Property Name="STATUS" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FULL_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PHONE_NUMBER" Type="varchar" MaxLength="15" />
+          <Property Name="ADDRESS" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FOOD_CODE" Type="varchar" MaxLength="8" />
+          <Property Name="FOOD_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CATEGORY_ID" Type="int" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="500" />
+          <Property Name="PRICE" Type="int" Nullable="false" />
+          <Property Name="IMAGE_URL" Type="nvarchar(max)" />
+          <Property Name="STATUS" Type="bit" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="INTRODUCTION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_CODE" Type="varchar" MaxLength="11" />
+          <Property Name="DATE" Type="datetime" />
+          <Property Name="ACCOUNT_ID" Type="int" />
+          <Property Name="CUSTOMER_ID" Type="int" />
+          <Property Name="STATUSBILL_ID" Type="int" />
+          <Property Name="FEEDBACK" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ORDER_ID" Type="int" Nullable="false" />
+          <Property Name="FOOD_ID" Type="int" Nullable="false" />
+          <Property Name="QUANTITY" Type="int" Nullable="false" />
+          <Property Name="PRICE" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STATUS_BILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__DETAILORD__PRICE__21B6055D">
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="1" />
+          <End Role="ORDER_DETAIL" Type="Self.ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="ORDER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOOD__MENU_ID__117F9D94">
+          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1" />
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="CATEGORY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUST_ID__1BFD2C07">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="0..1" />
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUST_ID__1CF15040">
+          <End Role="CUSTOMER" Type="Self.CUSTOMER" Multiplicity="0..1" />
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="CUSTOMER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOOD_ACCOUNT">
+          <End Role="ACCOUNT" Type="Self.ACCOUNT" Multiplicity="0..1" />
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_DETAIL_FOOD">
+          <End Role="FOOD" Type="Self.FOOD" Multiplicity="1" />
+          <End Role="ORDER_DETAIL" Type="Self.ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="FOOD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_STATUS_BILL">
+          <End Role="STATUS_BILL" Type="Self.STATUS_BILL" Multiplicity="0..1" />
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS_BILL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="STATUSBILL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AD1Team3ModelStoreContainer">
+          <EntitySet Name="ACCOUNT" EntityType="Self.ACCOUNT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUSTOMER" EntityType="Self.CUSTOMER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOOD" EntityType="Self.FOOD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INTRODUCTION" EntityType="Self.INTRODUCTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDER" EntityType="Self.ORDER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDER_DETAIL" EntityType="Self.ORDER_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATUS_BILL" EntityType="Self.STATUS_BILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DETAILORD__PRICE__21B6055D" Association="Self.FK__DETAILORD__PRICE__21B6055D">
+            <End Role="ORDER" EntitySet="ORDER" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOOD__MENU_ID__117F9D94" Association="Self.FK__FOOD__MENU_ID__117F9D94">
+            <End Role="CATEGORY" EntitySet="CATEGORY" />
+            <End Role="FOOD" EntitySet="FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUST_ID__1BFD2C07" Association="Self.FK__ORDERS__CUST_ID__1BFD2C07">
+            <End Role="ACCOUNT" EntitySet="ACCOUNT" />
+            <End Role="ORDER" EntitySet="ORDER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUST_ID__1CF15040" Association="Self.FK__ORDERS__CUST_ID__1CF15040">
+            <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+            <End Role="ORDER" EntitySet="ORDER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOOD_ACCOUNT" Association="Self.FK_FOOD_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNT" />
+            <End Role="FOOD" EntitySet="FOOD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_DETAIL_FOOD" Association="Self.FK_ORDER_DETAIL_FOOD">
+            <End Role="FOOD" EntitySet="FOOD" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_STATUS_BILL" Association="Self.FK_ORDER_STATUS_BILL">
+            <End Role="STATUS_BILL" EntitySet="STATUS_BILL" />
+            <End Role="ORDER" EntitySet="ORDER" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AD1Team3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AD1Team3Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACCOUNTs" EntityType="AD1Team3Model.ACCOUNT" />
+          <EntitySet Name="CATEGORies" EntityType="AD1Team3Model.CATEGORY" />
+          <EntitySet Name="CUSTOMERs" EntityType="AD1Team3Model.CUSTOMER" />
+          <EntitySet Name="FOODs" EntityType="AD1Team3Model.FOOD" />
+          <EntitySet Name="INTRODUCTIONs" EntityType="AD1Team3Model.INTRODUCTION" />
+          <EntitySet Name="ORDERs" EntityType="AD1Team3Model.ORDER" />
+          <EntitySet Name="ORDER_DETAIL" EntityType="AD1Team3Model.ORDER_DETAIL" />
+          <EntitySet Name="STATUS_BILL" EntityType="AD1Team3Model.STATUS_BILL" />
+          <EntitySet Name="sysdiagrams" EntityType="AD1Team3Model.sysdiagram" />
+          <AssociationSet Name="FK__ORDERS__CUST_ID__1BFD2C07" Association="AD1Team3Model.FK__ORDERS__CUST_ID__1BFD2C07">
+            <End Role="ACCOUNT" EntitySet="ACCOUNTs" />
+            <End Role="ORDER" EntitySet="ORDERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FOOD_ACCOUNT" Association="AD1Team3Model.FK_FOOD_ACCOUNT">
+            <End Role="ACCOUNT" EntitySet="ACCOUNTs" />
+            <End Role="FOOD" EntitySet="FOODs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOOD__MENU_ID__117F9D94" Association="AD1Team3Model.FK__FOOD__MENU_ID__117F9D94">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="FOOD" EntitySet="FOODs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__CUST_ID__1CF15040" Association="AD1Team3Model.FK__ORDERS__CUST_ID__1CF15040">
+            <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+            <End Role="ORDER" EntitySet="ORDERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_DETAIL_FOOD" Association="AD1Team3Model.FK_ORDER_DETAIL_FOOD">
+            <End Role="FOOD" EntitySet="FOODs" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DETAILORD__PRICE__21B6055D" Association="AD1Team3Model.FK__DETAILORD__PRICE__21B6055D">
+            <End Role="ORDER" EntitySet="ORDERs" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_STATUS_BILL" Association="AD1Team3Model.FK_ORDER_STATUS_BILL">
+            <End Role="STATUS_BILL" EntitySet="STATUS_BILL" />
+            <End Role="ORDER" EntitySet="ORDERs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ACCOUNT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FULL_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Boolean" Nullable="false" />
+          <Property Name="ROLE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDERs" Relationship="AD1Team3Model.FK__ORDERS__CUST_ID__1BFD2C07" FromRole="ACCOUNT" ToRole="ORDER" />
+          <NavigationProperty Name="FOODs" Relationship="AD1Team3Model.FK_FOOD_ACCOUNT" FromRole="ACCOUNT" ToRole="FOOD" />
+        </EntityType>
+        <EntityType Name="CATEGORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CATEGORY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="CATEGORY_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IMAGE_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FOODs" Relationship="AD1Team3Model.FK__FOOD__MENU_ID__117F9D94" FromRole="CATEGORY" ToRole="FOOD" />
+        </EntityType>
+        <EntityType Name="CUSTOMER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PASSWORD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FULL_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PHONE_NUMBER" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ORDERs" Relationship="AD1Team3Model.FK__ORDERS__CUST_ID__1CF15040" FromRole="CUSTOMER" ToRole="ORDER" />
+        </EntityType>
+        <EntityType Name="FOOD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FOOD_CODE" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="FOOD_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CATEGORY_ID" Type="Int32" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PRICE" Type="Int32" Nullable="false" />
+          <Property Name="IMAGE_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="STATUS" Type="Boolean" Nullable="false" />
+          <Property Name="ACCOUNT_ID" Type="Int32" />
+          <NavigationProperty Name="ACCOUNT" Relationship="AD1Team3Model.FK_FOOD_ACCOUNT" FromRole="FOOD" ToRole="ACCOUNT" />
+          <NavigationProperty Name="CATEGORY" Relationship="AD1Team3Model.FK__FOOD__MENU_ID__117F9D94" FromRole="FOOD" ToRole="CATEGORY" />
+          <NavigationProperty Name="ORDER_DETAIL" Relationship="AD1Team3Model.FK_ORDER_DETAIL_FOOD" FromRole="FOOD" ToRole="ORDER_DETAIL" />
+        </EntityType>
+        <EntityType Name="INTRODUCTION">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_CODE" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="DATE" Type="DateTime" Precision="3" />
+          <Property Name="ACCOUNT_ID" Type="Int32" />
+          <Property Name="CUSTOMER_ID" Type="Int32" />
+          <Property Name="STATUSBILL_ID" Type="Int32" />
+          <Property Name="FEEDBACK" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ACCOUNT" Relationship="AD1Team3Model.FK__ORDERS__CUST_ID__1BFD2C07" FromRole="ORDER" ToRole="ACCOUNT" />
+          <NavigationProperty Name="CUSTOMER" Relationship="AD1Team3Model.FK__ORDERS__CUST_ID__1CF15040" FromRole="ORDER" ToRole="CUSTOMER" />
+          <NavigationProperty Name="ORDER_DETAIL" Relationship="AD1Team3Model.FK__DETAILORD__PRICE__21B6055D" FromRole="ORDER" ToRole="ORDER_DETAIL" />
+          <NavigationProperty Name="STATUS_BILL" Relationship="AD1Team3Model.FK_ORDER_STATUS_BILL" FromRole="ORDER" ToRole="STATUS_BILL" />
+        </EntityType>
+        <EntityType Name="ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ORDER_ID" Type="Int32" Nullable="false" />
+          <Property Name="FOOD_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUANTITY" Type="Int32" Nullable="false" />
+          <Property Name="PRICE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FOOD" Relationship="AD1Team3Model.FK_ORDER_DETAIL_FOOD" FromRole="ORDER_DETAIL" ToRole="FOOD" />
+          <NavigationProperty Name="ORDER" Relationship="AD1Team3Model.FK__DETAILORD__PRICE__21B6055D" FromRole="ORDER_DETAIL" ToRole="ORDER" />
+        </EntityType>
+        <EntityType Name="STATUS_BILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ORDERs" Relationship="AD1Team3Model.FK_ORDER_STATUS_BILL" FromRole="STATUS_BILL" ToRole="ORDER" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__ORDERS__CUST_ID__1BFD2C07">
+          <End Type="AD1Team3Model.ACCOUNT" Role="ACCOUNT" Multiplicity="0..1" />
+          <End Type="AD1Team3Model.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FOOD_ACCOUNT">
+          <End Type="AD1Team3Model.ACCOUNT" Role="ACCOUNT" Multiplicity="0..1" />
+          <End Type="AD1Team3Model.FOOD" Role="FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCOUNT">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="ACCOUNT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOOD__MENU_ID__117F9D94">
+          <End Type="AD1Team3Model.CATEGORY" Role="CATEGORY" Multiplicity="1" />
+          <End Type="AD1Team3Model.FOOD" Role="FOOD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORY">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FOOD">
+              <PropertyRef Name="CATEGORY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__CUST_ID__1CF15040">
+          <End Type="AD1Team3Model.CUSTOMER" Role="CUSTOMER" Multiplicity="0..1" />
+          <End Type="AD1Team3Model.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUSTOMER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="CUSTOMER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_DETAIL_FOOD">
+          <End Type="AD1Team3Model.FOOD" Role="FOOD" Multiplicity="1" />
+          <End Type="AD1Team3Model.ORDER_DETAIL" Role="ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FOOD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="FOOD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DETAILORD__PRICE__21B6055D">
+          <End Type="AD1Team3Model.ORDER" Role="ORDER" Multiplicity="1" />
+          <End Type="AD1Team3Model.ORDER_DETAIL" Role="ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="ORDER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_STATUS_BILL">
+          <End Type="AD1Team3Model.STATUS_BILL" Role="STATUS_BILL" Multiplicity="0..1" />
+          <End Type="AD1Team3Model.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS_BILL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="STATUSBILL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AD1Team3ModelStoreContainer" CdmEntityContainer="AD1Team3Entities">
+          <EntitySetMapping Name="ACCOUNTs">
+            <EntityTypeMapping TypeName="AD1Team3Model.ACCOUNT">
+              <MappingFragment StoreEntitySet="ACCOUNT">
+                <ScalarProperty Name="ROLE" ColumnName="ROLE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORies">
+            <EntityTypeMapping TypeName="AD1Team3Model.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="IMAGE_URL" ColumnName="IMAGE_URL" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+                <ScalarProperty Name="CATEGORY_CODE" ColumnName="CATEGORY_CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUSTOMERs">
+            <EntityTypeMapping TypeName="AD1Team3Model.CUSTOMER">
+              <MappingFragment StoreEntitySet="CUSTOMER">
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="PHONE_NUMBER" ColumnName="PHONE_NUMBER" />
+                <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOODs">
+            <EntityTypeMapping TypeName="AD1Team3Model.FOOD">
+              <MappingFragment StoreEntitySet="FOOD">
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="IMAGE_URL" ColumnName="IMAGE_URL" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="CATEGORY_ID" ColumnName="CATEGORY_ID" />
+                <ScalarProperty Name="FOOD_NAME" ColumnName="FOOD_NAME" />
+                <ScalarProperty Name="FOOD_CODE" ColumnName="FOOD_CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INTRODUCTIONs">
+            <EntityTypeMapping TypeName="AD1Team3Model.INTRODUCTION">
+              <MappingFragment StoreEntitySet="INTRODUCTION">
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERs">
+            <EntityTypeMapping TypeName="AD1Team3Model.ORDER">
+              <MappingFragment StoreEntitySet="ORDER">
+                <ScalarProperty Name="FEEDBACK" ColumnName="FEEDBACK" />
+                <ScalarProperty Name="STATUSBILL_ID" ColumnName="STATUSBILL_ID" />
+                <ScalarProperty Name="CUSTOMER_ID" ColumnName="CUSTOMER_ID" />
+                <ScalarProperty Name="ACCOUNT_ID" ColumnName="ACCOUNT_ID" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="ORDER_CODE" ColumnName="ORDER_CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDER_DETAIL">
+            <EntityTypeMapping TypeName="AD1Team3Model.ORDER_DETAIL">
+              <MappingFragment StoreEntitySet="ORDER_DETAIL">
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="FOOD_ID" ColumnName="FOOD_ID" />
+                <ScalarProperty Name="ORDER_ID" ColumnName="ORDER_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATUS_BILL">
+            <EntityTypeMapping TypeName="AD1Team3Model.STATUS_BILL">
+              <MappingFragment StoreEntitySet="STATUS_BILL">
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AD1Team3Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

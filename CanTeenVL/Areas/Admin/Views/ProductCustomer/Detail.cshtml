@@ -1,0 +1,65 @@
+﻿@model CanTeenVL.Models.FOOD
+@using CanTeenVL.Models
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_CustomerLayout.cshtml";
+}
+<div class="all-title-box" style="background-image: url('http://cntttest.vanlanguni.edu.vn:18080/AD1Team3/Images/3.jpg'); ">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Shop Detail</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index","ProductCustomer")">Shop</a></li>
+                    <li class="breadcrumb-item active">Shop Detail </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="shop-detail-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-6">
+                <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active"><img class="d-block w-100" src="@Url.Action("Picture", new { Model.ID})" alt="First slide" /> </div>
+                    </div>
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-1" data-slide-to="0" class="active">
+                            <img class="d-block w-100 img-fluid" src="images/smp-img-01.jpg" alt="" />
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-7 col-md-6">
+                <div class="single-product-details">
+                    <form action="@Url.Action("Create", "ShoppingCart")" method="post">
+                        <input type="hidden" name="productId" value="@Model.ID" />
+                        <h2>@Model.FOOD_NAME</h2>
+                        <h5> @Model.PRICE.ToString("N0") đ</h5>
+                        <p>
+                            <h4>Short Description:</h4>
+                        <p>
+                            @MvcHtmlString.Create(Model.DESCRIPTION)
+                        </p>
+                        <ul>
+                            <li>
+                                <div class="form-group quantity-box">
+                                    <label class="control-label">Quantity</label>
+                                    <input class="form-control" value="1" min="1" max="20" type="number" name="quantity" required="required">
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="price-box-bar">
+                            <div class="cart-and-bay-btn">
+                                <input class="btn hvr-hover" type="submit" value="Add to cart" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

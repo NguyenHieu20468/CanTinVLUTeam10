@@ -1,0 +1,100 @@
+﻿@model CanTeenVL.Models.CUSTOMER
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="@Url.Content("~/fontsSignUp/material-icon/css/material-design-iconic-font.min.css")">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="@Url.Content("~/cssSignUp/style.css")">
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="main">
+
+            <!-- Sign up form -->
+            <section class="signup">
+                <div class="container">
+                    <div class="signup-content">
+                        <div class="signup-form">
+                            <h2 class="form-title">Sign up</h2>
+                            <form method="POST" class="register-form" id="register-form">
+                                @if (ViewBag.error != null)
+                                {
+                                    <span class="badge badge-danger" style="color:red">@ViewBag.error</span>
+                                }
+                                <div class="form-group">
+                                    <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                    @*<input type="text" name="name" id="name" placeholder="Your Name" />*@
+                                    @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Name", @required = true } })
+                                    @Html.ValidationMessageFor(model => model.FULL_NAME, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                    @*<input type="email" name="email" id="email" placeholder="Your Email" />*@
+                                    @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Email", @required = true } })
+                                    @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                    @*<input type="password" name="pass" id="pass" placeholder="Password" />*@
+                                    @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @type = "password", @required = true } })
+                                    @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="re-pass"><i class="zmdi zmdi-phone"></i></label>
+                                    @Html.EditorFor(model => model.PHONE_NUMBER, new { htmlAttributes = new { @class = "form-control", @placeholder = "Phone Number", @required = true } })
+                                    @Html.ValidationMessageFor(model => model.PHONE_NUMBER, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="re-pass"><i class="zmdi zmdi-phone"></i></label>
+                                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address", @required = true } })
+                                    @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required="required" />
+                                    <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                                </div>
+                                <div class="form-group form-button">
+                                    <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="signup-image">
+                            <figure><img src="@Url.Content("~/images/signup-imageSignUp.jpg")" alt="sing up image"></figure>
+                            <a href="#" class="signup-image-link">I am already member</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    <!-- JS -->
+    <script src="@Url.Content("~/vendorSignUp/jquery/jquery.min.js")"></script>
+    <script src="@Url.Content("~/jsSignUp/main.js")"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+
+
+
+
+
+
+
+

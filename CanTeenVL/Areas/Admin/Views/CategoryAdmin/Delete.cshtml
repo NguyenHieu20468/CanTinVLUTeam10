@@ -1,0 +1,53 @@
+﻿@model CanTeenVL.Models.CATEGORY
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2 style="text-align:center">Delete Category</h2>
+<br />
+<h3 style="text-align:center"><b>Are you sure you want to delete this?</b></h3>
+<div>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h1 class="card-title">Delete</h1>
+        </div>
+        <form>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-5">
+                        <label for="exampleInputEmail1">CATEGORY_CODE</label>
+                        <input type="text" class="form-control" disabled placeholder=@Html.DisplayFor(model => model.CATEGORY_CODE)>
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label for="exampleInputPassword1">CATEGORY_NAME</label>
+                        <div class="form-control" disabled style="background-color: #e9ecef;color: #A9A9A9">
+                            @MvcHtmlString.Create(Model.CATEGORY_NAME)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="IMG">PICTURE</label>
+                    <br />
+                    <img id="Picture" src="@Url.Action("Picture", new { Model.ID})" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" disabled @Html.DisplayFor(model => model.STATUS)
+                    <label for="customCheckbox3" class="custom-control-label">STATUS</label>
+                </div>
+            </div>
+    </div>
+    </form>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="card-footer">
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Action("Index","CategoryAdmin")" class="btn btn-primary">Cancel</a>
+        </div>
+    }
+</div>

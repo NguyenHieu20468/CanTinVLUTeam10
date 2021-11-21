@@ -1,0 +1,115 @@
+﻿@model IEnumerable<CanTeenVL.Models.ORDER>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var quanlity1 = 0;
+    var total1 = 0;
+
+}
+
+<section class="content">
+    <br />
+    <h2 style="text-align:center">List Order</h2>
+    <br />
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Mã hóa đơn
+                                            </th>
+                                            <th>
+                                                Ngày
+                                            </th>
+                                            <th>
+                                                Tên khách hàng
+                                            </th>
+                                            <th>
+                                                Số điện thoại
+                                            </th>
+                                            <th>
+                                                Tổng số lượng
+                                            </th>
+                                            <th>
+                                                Tổng tiền
+                                            </th>
+                                            <th>
+                                                Góp ý
+                                            </th>
+                                            <th>
+                                                Trạng Thái
+                                            </th>
+                                            <th>
+                                                Nhân Viên
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ORDER_CODE)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DATE)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CUSTOMER.FULL_NAME)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CUSTOMER.PHONE_NUMBER)
+                                            </td>
+                                            @foreach (var items in item.ORDER_DETAIL)
+                                            {
+                                                quanlity1 += items.QUANTITY;
+                                                total1 += items.PRICE * items.QUANTITY;
+                                            }
+                                            <td>
+                                                @quanlity1
+                                            </td>
+                                            <td>
+                                                @total1.ToString("#,###")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FEEDBACK)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.STATUS_BILL.NAME)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ACCOUNT.FULL_NAME)
+                                            </td>
+                                            <td>
+                                                <a href=@Url.Action("Edit", new { item.ID})>
+                                                    <i class="fas fa-edit" style="width:20px"></i>
+                                                </a>
+                                                <a href=@Url.Action("Print", new { item.ID})>
+                                                    |
+                                                    <i class="fas fa-print"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                            quanlity1 = 0;
+                                            total1 = 0;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

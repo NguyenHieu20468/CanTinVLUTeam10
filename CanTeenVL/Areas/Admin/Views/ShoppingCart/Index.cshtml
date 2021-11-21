@@ -1,0 +1,104 @@
+﻿@model IEnumerable<CanTeenVL.Models.ORDER_DETAIL>
+@using CanTeenVL.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_CustomerLayout.cshtml";
+    var Subtotal = 0;
+}
+@using (Html.BeginForm("Edit", "ShoppingCart"))
+{
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Images</th>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="@Url.Action("Detail", "ProductCustomer", new { item.FOOD.ID })">
+                                            <img class="img-fluid" alt="" src="@Url.Action("Picture", "ShoppingCart", new { item.FOOD.ID })">
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="@Url.Action("Detail", "ProductCustomer", new { item.FOOD.ID })">
+                                            @item.FOOD.FOOD_NAME
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>@item.FOOD.PRICE.ToString("N0") đ</p>
+                                    </td>
+                                    <td class="quantity-box">
+                                        @Html.Hidden("Product_id", item.FOOD.ID)
+                                        <input type="number" size="4" value=@item.QUANTITY min="1" step="1" class="c-input-text qty text" name="Quantity">
+                                    </td>
+                                    <td class="total-pr">
+
+                                        <p>@((item.FOOD.PRICE*item.QUANTITY).ToString("N0")) đ</p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a href="@Url.Action("DeleteId", new { item.FOOD.ID })" onclick="return confirm ('Are you sure want to Delete?')">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                    Subtotal += (int)(item.QUANTITY * item.FOOD.PRICE);
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-5">
+                <div class="col-lg-6 col-sm-6">
+                    <div class="update-box">
+                        <input value="Update Cart" type="submit">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <div class="col-12 d-flex shopping-box"><a href="@Url.Action("Index","ProductCustomer")" class="ml-auto btn hvr-hover">Continues</a> </div>
+                </div>
+            </div>
+            
+
+            <div class="row my-5">
+                <div class="col-lg-8 col-sm-12"></div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="order-box">
+                        <h3>Order summary</h3>
+                        <div class="d-flex">
+                            <h4>Sub Total</h4>
+                            <div class="ml-auto font-weight-bold"> @Subtotal.ToString("N0") đ </div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Shipping Cost</h4>
+                            <div class="ml-auto font-weight-bold"> Free </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total">
+                            <h5>Grand Total</h5>
+                            <div class="ml-auto h5"> @Subtotal.ToString("N0") đ </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 d-flex shopping-box"><a href="@Url.Action("Create","Bill")" class="ml-auto btn hvr-hover">Checkout</a> </div>
+            </div>
+
+        </div>
+    </div>
+}

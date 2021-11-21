@@ -1,0 +1,41 @@
+﻿@model CanTeenVL.Models.INTRODUCTION
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<br />
+<h2 style="text-align:center">Delete Introduction</h2>
+<br />
+<h3 style="text-align:center">Are you sure you want to delete this?</h3>
+<div>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h1 class="card-title">Delete</h1>
+        </div>
+        <form>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="exampleInputEmail1">CONTENT</label>
+                        @MvcHtmlString.Create(Model.CONTENT)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="IMG">PICTURE</label>
+                    <br />
+                    <img id="Picture" src="@Url.Action("Picture", new { Model.ID})" width="130" />
+                </div>
+            </div>
+    </div>
+    </form>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-footer">
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            <a href="@Url.Action("Index","Introduction")" class="btn btn-primary">Cancel</a>
+        </div>
+    }
+</div>

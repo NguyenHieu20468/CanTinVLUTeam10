@@ -1,0 +1,49 @@
+﻿@model CanTeenVL.Models.ORDER
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var name = Session["user-fullname"];
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <br />
+        <h2 style="text-align:center">EDIT ORDER</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        <div class="card card-primary">
+            <div class="card-header">
+                <h1 class="card-title">Edit</h1>
+            </div>
+            <form>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ACCOUNT_ID, "ACCOUNT_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ACCOUNT_ID", new SelectList(ViewBag.account_type, "ID", "FULL_NAME", Model.STATUS_BILL), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ACCOUNT_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.STATUSBILL_ID, "STATUSBILL_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("STATUSBILL_ID", new SelectList(ViewBag.status_type, "ID", "NAME", Model.STATUS_BILL), htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.STATUSBILL_ID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" value="Save" class="btn btn-primary">Submit</button>
+                    <a href="@Url.Action("Index","Order")" class="btn btn-primary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+

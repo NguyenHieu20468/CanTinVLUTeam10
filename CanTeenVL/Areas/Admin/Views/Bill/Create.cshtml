@@ -1,0 +1,156 @@
+﻿@model CanTeenVL.Models.ORDER
+@using CanTeenVL.Models
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_CustomerLayout.cshtml";
+    var Cart = ViewBag.Cart as List<ORDER_DETAIL>;
+    var id = @Session["user-idc"];
+    var name = @Session["user-fullnamec"];
+    var phone = @Session["user-phonec"];
+    var address = @Session["user-addressc"];
+    var email = @Session["user-emailc"];
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<h1 style="text-align:center">Xác Nhận Thông Tin</h1>
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.ORDER_CODE, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ORDER_CODE, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ORDER_CODE, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row new-account-login">
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Billing address</h3>
+                        </div>
+                        <form class="needs-validation" novalidate="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First name *</label>
+                                    @*<input type="text" class="form-control" id="firstName" placeholder="" value="" required="">*@
+                                    @Html.TextBox("NAME", (string)name, new { @class = "form-control", @readonly = "readonly" })
+                                    <div class="invalid-feedback"> Valid first name is required. </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Phone *</label>
+                                    @*<input type="text" class="form-control" id="lastName" placeholder="" value="" required="">*@
+                                    @Html.TextBox("NAME", phone, new { @class = "form-control", @readonly = "readonly" })
+                                    <div class="invalid-feedback"> Valid last name is required. </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="username">Email *</label>
+                                <div class="input-group">
+                                    @*<input type="text" class="form-control" id="username" placeholder="" required="">*@
+                                    @Html.TextBox("NAME", email, new { @class = "form-control", @readonly = "readonly" })
+                                    <div class="invalid-feedback" style="width: 100%;"> Your username is required. </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">Address *</label>
+                                @*<input type="email" class="form-control" id="email" placeholder="">*@
+                                @Html.TextBox("NAME", address, new { @class = "form-control", @readonly = "readonly" })
+                                <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="address2">Feed Back *</label>
+                                @*<input type="text" class="form-control" id="address2" placeholder="">*@
+                                @Html.EditorFor(model => model.FEEDBACK, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.FEEDBACK, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="mb-3" hidden>
+                                <label for="address">Status Bill</label>
+                                @*<input type="text" class="form-control" id="address" placeholder="" required="">*@
+                                @Html.DropDownList("STATUSBILL_ID", new SelectList(ViewBag.product_type, "ID", "NAME"), htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.STATUSBILL_ID, "", new { @class = "text-danger" })
+                                <div class="invalid-feedback"> Please enter your shipping address. </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Shopping cart</h3>
+                                </div>
+                                <div class="rounded p-2 bg-light">
+                                    @foreach (var item in Cart)
+                                    {<div class="media mb-2 border-bottom">
+                                            <div class="media-body">
+                                                <a href="detail.html"> @item.FOOD.FOOD_NAME</a>
+                                                <div class="small text-muted">Price: @item.FOOD.PRICE.ToString("N0") đ <span class="mx-2">|</span> Qty: @item.QUANTITY <span class="mx-2">|</span> Subtotal: @((item.FOOD.PRICE*item.QUANTITY).ToString("N0")) đ</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="order-box">
+                                <div class="title-left">
+                                    <h3>Your order</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="font-weight-bold">Product</div>
+                                    <div class="ml-auto font-weight-bold">Total</div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Sub Total</h4>
+                                    <div class="ml-auto font-weight-bold"> @(Cart.Sum(c => c.FOOD.PRICE*c.QUANTITY).ToString("N0")) đ </div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Shipping Cost</h4>
+                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex gr-total">
+                                    <h5>Grand Total</h5>
+                                    <div class="ml-auto h5"> @(Cart.Sum(c => c.FOOD.PRICE*c.QUANTITY).ToString("N0")) đ</div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="col-12 d-flex shopping-box">
+                            @if (Cart.Count > 0)
+                            {
+                                <input type="submit" value="Place Order" style="color:white" class="ml-auto btn hvr-hover" onclick="return alert ('Đặt Hàng Thành Công')" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Place Order" style="color:white" class="ml-auto btn hvr-hover" onclick="return alert ('Không có sản phẩm trong giỏ hàng. Vui lòng thêm sản phẩm')"/>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.CUSTOMER_ID, "CUSTOMER_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-10" hidden>
+            @Html.TextBoxFor(m => m.CUSTOMER_ID, new { @class = "form-control", @Value = id, @readonly = "readonly", })
+            @Html.ValidationMessageFor(model => model.CUSTOMER_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+}

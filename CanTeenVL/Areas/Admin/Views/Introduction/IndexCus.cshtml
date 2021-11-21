@@ -1,0 +1,95 @@
+﻿@model IEnumerable<CanTeenVL.Models.INTRODUCTION>
+
+@{
+    ViewBag.Title = "IndexCus";
+    Layout = "~/Areas/Admin/Views/Shared/_CustomerLayout.cshtml";
+}
+<div class="about-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="noo-sh-title"><span>Introduction</span></h2>
+                <p>
+                    Trường Đại học Văn Lang có 16 khoa và đào tạo 07 ngành bậc sau đại học, 45 ngành bậc đại học, trường có 3 Cơ sở đào tạo chính ở Quận 1, Quận Bình Thạnh và Quận Gò Vấp, với số lượng sinh viên khoảng 25,000 và khoảng 800 CBGVNV thường xuyên học tập và làm việc tại 3 Cơ sở.
+
+                    Cả 3 Cơ sở ở Trường đều có rất nhiều các dịch vụ, tiện ích, trong đó Canteen là một trong những nơi đáp ứng một số lượng lớn các bữa ăn sáng, ăn trưa cho sinh viên và CBGVNV của Trường.
+
+                    Do số lượng người sử dụng dịch vụ tại Canteen ngày càng lớn, dẫn đến Canteen không đủ các suất ăn để phục vụ cho mọi người, đồng thời Canteen cũng không biết được nhu cầu dùng bữa của người dùng trước nên không bố trí kịp thời các bữa ăn cho phù hợp và đầy đủ với từng cá nhân.
+
+                    Vì vậy, Canteen trường muốn xây dựng một hệ thống quản lý Canteen Trường Đại học Văn Lang nhằm:
+
+                    Giúp sinh viên và CBGVNV đặt món ăn trưa trước dựa theo menu của canteen đưa lên hằng ngày.
+
+                    Ngoài việc đặt món ăn sinh viên và CBGVNV có thể góp ý trong mục góp ý nhằm tăng chất lượng của canteen hơn, cải thiện món ăn cho bữa trưa của mình.
+
+                    Website giúp canteen kiểm soát được số lượng và chất lượng dựa theo chỉ số của website.
+
+                    Sinh viên và CBGVNV sẽ chủ động biết trước được các món ăn, giá tiền của ngày hôm đó. Bằng cách này SV và CBGVNV chỉ việc tới canteen đưa mssv hoặc mã số của GVCBNV để nhận phần ăn và thanh toán tại quầy hoặc khi nhận hàng.
+
+                    Giảm nguồn nhân lực cho canteen.
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <div class="banner-frame">
+                    <img class="img-thumbnail img-fluid" src="images/about-img.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>Đảm bảo Sức khỏe và VSATTP</h3>
+                    <p>Là nhà cung cấp thực phẩm trường học chuyên nghiệp, chúng tôi có trách nhiệm bảo vệ sức khỏe và sự an toàn cho học sinh, giáo viên, nhân viên nhà trường thông qua các tiêu chuẩn VSATTP:</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>Nguồn thực phẩm an toàn</h3>
+                    <p>Lựa chọn các nhà cung cấp thực phẩm chất lượng cao, uy tín, đảm bảo đúng các tiêu chuẩn VSATTP. Là giá trị cộng thêm The Caterers mang đến cho đối tác sự an tâm trong trường hợp sự cố bảo hiểm xảy ra</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <div class="service-block-inner">
+                    <h3>Đội ngũ nhân viên bếp chuyên nghiệp</h3>
+                    <p>được khám sức khỏe định kỳ, chứng nhận đủ điều kiện VSATTP và thông qua huấn luyện, đào tạo, giám sát chuyên môn và VSATTP bởi Đội ngũ Kiểm Soát Chất Lượng (QC) </p>
+                </div>
+            </div>
+        </div>
+        <div class="row my-4">
+            <div class="col-12">
+                <h2 class="noo-sh-title">Meet Our Team</h2>
+            </div>
+        </div>
+        <div class="featured-products-box owl-carousel owl-theme owl-loaded owl-drag">
+            <div class="owl-stage-outer">
+                <div class="owl-stage" style="transform: translate3d(-1942px, 0px, 0px); transition: all 0.25s ease 0s; width: 4440px;">
+                    @foreach (var item1 in Model)
+                    {
+                        <div class="owl-item cloned" style="width: 277.5px;">
+                            <div class="item">
+                                <div class="products-single fix">
+                                    <div class="box-img-hover">
+                                        @*<img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">*@
+                                        <img src="@Url.Action("Picture", new { item1.ID})" width="130px" />
+                                        <div class="mask-icon">
+                                            <ul>
+                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="why-text">
+                                        <h4>@Html.Raw(item1.CONTENT)</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><i class="fas fa-arrow-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="fas fa-arrow-right"></i></button></div><div class="owl-dots disabled"></div>
+        </div>
+
+
+    </div>
+</div>

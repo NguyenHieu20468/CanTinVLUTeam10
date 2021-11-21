@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CanTeenVL.Models.FOOD>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <br />
+    <h2 style="text-align:center">List Products</h2>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <a href="@Url.Action("Create","ProductAdmin")" class="btn btn-primary col-1">Create New</a>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Des</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Des</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Status</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FOOD_CODE)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FOOD_NAME)
+                        </td>
+                        <td>
+                            @if (item.DESCRIPTION != null && item.DESCRIPTION.Length > 100)
+                            {
+                                @Html.Raw(item.DESCRIPTION.Substring(0, 100));
+                            }
+                            else
+                            {
+                                @Html.Raw(item.DESCRIPTION);
+                            }
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PRICE)
+                        </td>
+                        <td>
+                            <img src="@Url.Action("Picture", new { item.ID})" width="130px"/>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.STATUS)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CATEGORY.CATEGORY_CODE)
+                        </td>
+                        <td>
+                            <a href=@Url.Action("Edit", new { item.ID})>
+                                <i class="fas fa-edit" style="width:20px"></i>
+                            </a>
+                            <a href=@Url.Action("Detail", new { item.ID})>
+                                |
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a href=@Url.Action("Delete", new { item.ID})>
+                                |
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+

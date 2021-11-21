@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CanTeenVL.Models.INTRODUCTION>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <!-- /.card-header -->
+    <div class="card-body">
+        <h2 style="text-align:center">List Introduction</h2>
+        <a href="@Url.Action("Create","Introduction")" class="btn btn-primary col-1">Create New</a>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(item.CONTENT)
+                        </td>
+                        <td>
+                            <img src="@Url.Action("Picture", new { item.ID})" width="130px" />
+                        </td>
+                        <td>
+                            <a href=@Url.Action("Edit", new { item.ID})>
+                                <i class="fas fa-edit" style="width:20px"></i>
+                            </a>
+                            <a href=@Url.Action("Delete", new { item.ID})>
+                                |
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>

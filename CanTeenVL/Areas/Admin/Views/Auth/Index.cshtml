@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CanTeenVL.Models.ACCOUNT>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <!-- /.card-header -->
+    <div class="card-body">
+        <h2 style="text-align:center">List Account</h2>
+        <a href="@Url.Action("Create","Auth")" class="btn btn-primary col-1">Create New</a>
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>EMAIL</th>
+                    <th>PASSWORD</th>
+                    <th>FULL_NAME</th>
+                    <th>STATUS</th>
+                    <th>ROLE</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>EMAIL</th>
+                    <th>PASSWORD</th>
+                    <th>FULL_NAME</th>
+                    <th>STATUS</th>
+                    <th>ROLE</th>
+                    <th>ACTION</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EMAIL)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PASSWORD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FULL_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.STATUS)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ROLE)
+                        </td>
+                        <td>
+                            <a href=@Url.Action("Edit", new { item.ID})>
+                                <i class="fas fa-edit" style="width:20px"></i>
+                            </a>
+                            <a href=@Url.Action("Delete", new { item.ID})>
+                                |
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
